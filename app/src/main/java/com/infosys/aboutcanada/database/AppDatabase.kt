@@ -11,11 +11,11 @@ import com.infosys.aboutcanada.model.RowsItem
 @TypeConverters(DataConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun aboutDao(): AboutDao?
-
     companion object {
         @Volatile
         private var instance: AppDatabase? = null
         private val LOCK = Any()
+        private const val DB_NAME = "AboutPojo.db"
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
             instance ?: createDatabase(context).also {
@@ -24,7 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         private fun createDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "AboutPojo.db")
+            Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DB_NAME)
                 .allowMainThreadQueries()
                 .build()
     }

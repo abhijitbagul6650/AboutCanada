@@ -25,5 +25,6 @@ class AboutCanadaListAdapter(private val listItem: AboutCanadaPojo?) : RecyclerV
         holder.bindInformation(listItem?.rows?.get(position))
     }
 
-    override fun getItemCount(): Int = listItem?.rows?.size!!
+    override fun getItemCount(): Int = listItem?.rows?.size?:0
+    //NOT ABLE TO REMOVE !!
 }

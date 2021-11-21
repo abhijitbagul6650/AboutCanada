@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.infosys.aboutcanada.api.DatabaseRepository
 import com.infosys.aboutcanada.api.MainRepository
-import com.infosys.aboutcanada.database.AppDatabase
 import com.infosys.aboutcanada.model.AboutCanadaPojo
 import com.infosys.aboutcanada.model.RowsItem
 import retrofit2.Call
@@ -13,10 +12,11 @@ import retrofit2.Response
 
 class MainViewModel(private val dbrepository: DatabaseRepository?, private val repository: MainRepository) : ViewModel() {
     val aboutListItems = MutableLiveData<AboutCanadaPojo?>()
+    val failureResponse = MutableLiveData<String?>()
 
     fun getListItems() {
         val listItems = dbrepository?.getAllData()
-        if (listItems?.size!! > 0) {
+        if (listItems?.size?:0 > 0) {
             val aboutCanadaPojo = AboutCanadaPojo("TITLE", listItems)
             aboutListItems.postValue(aboutCanadaPojo)
             return
@@ -29,7 +29,7 @@ class MainViewModel(private val dbrepository: DatabaseRepository?, private val r
             }
 
             override fun onFailure(call: Call<AboutCanadaPojo>, t: Throwable) {
-
+                failureResponse.postValue(t.message)
             }
         })
     }

@@ -20,8 +20,7 @@ public class DataConverter implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<List<RowsItem>>() {
         }.getType();
-        String json = gson.toJson(optionValues, type);
-        return json;
+        return gson.toJson(optionValues, type);
     }
 
     @TypeConverter // note this annotation
@@ -32,7 +31,6 @@ public class DataConverter implements Serializable {
         Gson gson = new Gson();
         Type type = new TypeToken<List<RowsItem>>() {
         }.getType();
-        List<RowsItem> productCategoriesList = gson.fromJson(optionValuesString, type);
-        return productCategoriesList;
+        return gson.fromJson(optionValuesString, type);
     }
 }

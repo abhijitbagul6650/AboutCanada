@@ -12,16 +12,16 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.gson.annotations.SerializedName
 import com.infosys.aboutcanada.R
-import com.infosys.aboutcanada.constants.AppConstants
 import com.infosys.aboutcanada.database.DataConverter
 
+const val TABLE_ABOUT_CANADA = "AboutCanada"
 data class AboutCanadaPojo(
     val title: String? = null,
     val rows: List<RowsItem?>? = null
 )
 
 @TypeConverters(DataConverter::class)
-@Entity(tableName = AppConstants.TABLE_ABOUT_CANADA)
+@Entity(tableName = TABLE_ABOUT_CANADA)
 data class RowsItem(
     @PrimaryKey(autoGenerate = true)
     val uid: Int = 0,
@@ -40,8 +40,7 @@ data class RowsItem(
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(uid)
