@@ -11,7 +11,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MainViewModel(private val dbrepository: DatabaseRepository?, private val repository: MainRepository) : ViewModel() {
-    val aboutListItems = MutableLiveData<AboutCanadaPojo?>()
+    var aboutListItems = MutableLiveData<AboutCanadaPojo?>()
     val failureResponse = MutableLiveData<String?>()
 
     fun getListItems() {

@@ -1,34 +1,44 @@
-package com.infosys.aboutcanada.ui.main;
+package com.infosys.aboutcanada.ui.main
 
-import com.infosys.aboutcanada.R;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.infosys.aboutcanada.api.DatabaseRepository
+import com.infosys.aboutcanada.api.MainRepository
+import com.infosys.aboutcanada.api.RetrofitService
+import com.infosys.aboutcanada.database.AppDatabase
+import com.infosys.aboutcanada.model.AboutCanadaPojo
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.MainCoroutineDispatcher
+import org.junit.Assert.*
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.mockito.Mockito
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
-import org.robolectric.RobolectricTestRunner;
+@ExperimentalCoroutinesApi
+class MainViewModelTest {
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-import static org.junit.Assert.assertNotNull;
-
-@RunWith(RobolectricTestRunner.class)
-public class MainViewModelTest {
-    private MainActivity activity;
+    private lateinit var databaseRepository: DatabaseRepository
+    private lateinit var viewModel: MainViewModel
 
     @Before
-    public void setUp() throws Exception {
-        activity = Robolectric.buildActivity(MainActivity.class)
-                .create()
-                .resume()
-                .get();
+    fun setup(){
+        viewModel = Mockito.mock(MainViewModel::class.java)
     }
 
     @Test
-    public void shouldNotBeNull() throws Exception {
-        assertNotNull(activity);
+    fun checkAboutLiveData() {
+        viewModel.aboutListItems = getAboutCanadaData()
     }
 
-    @Test
-    public void shouldHaveWelcomeFragment() throws Exception {
-        assertNotNull(activity.getFragmentManager().findFragmentById(R.id.container));
+    fun getAboutCanadaData(): MutableLiveData<AboutCanadaPojo?> {
+        val response = MockResponseFileReader("generated.json").content
+        val data = Gson().fromJson(response, AboutCanadaPojo::class.java)
+        val aboutListItems = MutableLiveData<AboutCanadaPojo?>()
+        aboutListItems.postValue(data)
+        return aboutListItems
     }
 }
