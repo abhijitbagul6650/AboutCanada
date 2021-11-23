@@ -21,7 +21,6 @@ class MainViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var databaseRepository: DatabaseRepository
     private lateinit var viewModel: MainViewModel
 
     @Before

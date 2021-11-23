@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
@@ -28,7 +29,7 @@ class AboutCanadaFragment : Fragment(), LifecycleObserver {
         fun newInstance() = AboutCanadaFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
