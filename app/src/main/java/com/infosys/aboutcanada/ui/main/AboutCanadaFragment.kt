@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.VisibleForTesting
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
@@ -36,14 +35,16 @@ class AboutCanadaFragment : Fragment(), LifecycleObserver {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_about_canada, container, false)
+        _binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_about_canada, container, false)
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val dbRepository = context?.let { AppDatabase(it) }?.let { DatabaseRepository(it) }
-        viewModel = ViewModelProvider(this, ViewModelFactory(dbRepository, MainRepository(retrofitService = retrofit))
+        viewModel = ViewModelProvider(
+            this, ViewModelFactory(dbRepository, MainRepository(retrofitService = retrofit))
         ).get(MainViewModel::class.java)
         setupValues()
         enableSwipeRefresh()
